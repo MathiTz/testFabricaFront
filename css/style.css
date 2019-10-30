@@ -18,3 +18,13 @@
   top: 15px;
   right: 15px;
 }
+
+.table-responsive table {
+  color: white;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 100, 36, 1) 0%,
+    rgba(64, 64, 177, 0.6404761733795081) 35%,
+    rgba(0, 212, 255, 1) 100%
+  );
+}

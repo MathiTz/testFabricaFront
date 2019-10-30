@@ -1,3 +1,5 @@
+let people = [];
+
 const formEl = $("#formCreate"),
   inputName = $("#exampleInputName1"),
   inputEmail = $("#exampleInputEmail1"),
@@ -10,6 +12,8 @@ formEl.submit(e => {
 
   btnSubmitForm.disable = true;
 
+  // let people = [];
+
   let values = [
     inputName.val(),
     inputEmail.val(),
@@ -17,5 +21,31 @@ formEl.submit(e => {
     inputCPF.val()
   ];
 
-  console.log(values);
+  this.addValues(values);
+  this.resetForm();
+
+  // people.push(values);
+
+  // localStorage.setItem("people", JSON.stringify(people));
 });
+
+function addValues(data) {
+  if(!data) {
+    return;
+  }
+
+  people.unshift(data);
+
+  localStorage.setItem("people", JSON.stringify(people));
+}
+
+function resetForm() {
+  inputName.val() = "";
+  inputEmail.val() = "";
+  inputTelephone.val() = "";
+  inputCPF.val() = "";
+}
+
+// function addLine(data) {
+
+// }
