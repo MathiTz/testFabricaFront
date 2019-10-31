@@ -1,3 +1,7 @@
+.total {
+  background: lightgray;
+}
+
 .nav-background {
   background: linear-gradient(
     90deg,
@@ -14,7 +18,7 @@
 }
 
 .modal-create {
-  position: fixed;
+  position: absolute;
   top: 15px;
   right: 15px;
 }

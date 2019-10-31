@@ -1,4 +1,4 @@
-let people = [];
+// let people = [];
 
 const formEl = $("#formCreate"),
   inputName = $("#exampleInputName1"),
@@ -7,45 +7,83 @@ const formEl = $("#formCreate"),
   inputCPF = $("#exampleInputCPF1"),
   btnSubmitForm = $("#btnSubmitForm");
 
+$(document).ready(() => {
+  this.validateForm();
+  let users = this.getPeople();
+  let table =
+    "<thead><tr><td>Nome</td><td>CPF</td><td>Telefone</td><td>Email</td></tr></thead><tbody>";
+  for (let key in users) {
+    table +=
+      "<tr><td>" +
+      users[key].name +
+      "</td><td>" +
+      users[key].cpf +
+      "</td><td>" +
+      users[key].telefone +
+      "</td><td>" +
+      users[key].email;
+  }
+  table += "</tbody>";
+  document.getElementById("tableForm").innerHTML = table;
+});
+
 formEl.submit(e => {
   e.preventDefault();
 
   btnSubmitForm.disable = true;
+  btnSubmitForm.innerHTML = "Loading";
 
-  // let people = [];
+  let person = {
+    name: inputName.val(),
+    email: inputEmail.val(),
+    telefone: inputTelephone.val(),
+    cpf: inputCPF.val()
+  };
 
-  let values = [
-    inputName.val(),
-    inputEmail.val(),
-    inputTelephone.val(),
-    inputCPF.val()
-  ];
-
-  this.addValues(values);
+  this.addValues(person);
   this.resetForm();
-
-  // people.push(values);
-
-  // localStorage.setItem("people", JSON.stringify(people));
+  if (confirm("Operação realizada com sucesso!")) {
+    window.location.reload();
+  }
 });
 
 function addValues(data) {
-  if(!data) {
+  if (!data) {
     return;
   }
 
-  people.unshift(data);
+  let people = this.getPeople();
+
+  people.push(data);
 
   localStorage.setItem("people", JSON.stringify(people));
 }
 
 function resetForm() {
-  inputName.val() = "";
-  inputEmail.val() = "";
-  inputTelephone.val() = "";
-  inputCPF.val() = "";
+  document.getElementById("formCreate").reset();
+
+  $("#exampleModal").modal("hide");
 }
 
-// function addLine(data) {
+function validateForm() {
+  if (
+    inputName.val() === "" ||
+    inputCPF.val() === "" ||
+    inputTelephone.val() === "" ||
+    inputEmail.val() === ""
+  ) {
+    $("#btnSubmitForm").attr("disabled", true);
+  } else {
+    $("#btnSubmitForm").attr("disabled", false);
+  }
+}
 
-// }
+function getPeople() {
+  let person = [];
+
+  if (localStorage.getItem("people")) {
+    person = JSON.parse(localStorage.getItem("people"));
+  }
+
+  return person;
+}
